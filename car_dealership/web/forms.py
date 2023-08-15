@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import TestDrive, Car, Price
+from .models import TestDrive, Car
 
 
 class UserForm(forms.ModelForm):
@@ -12,10 +12,10 @@ class UserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
 
 
-class PriceForm(forms.ModelForm):
-    class Meta:
-        model = Price
-        fields = ['brand', 'fueltype', 'powerBHP', 'Numberofyears', 'mileageKmpl','location','kmdriven','transmission','ownertype','engineCC','seats']
+# class PriceForm(forms.ModelForm):
+#     class Meta:
+#         model = Price
+#         fields = ['brand', 'fueltype', 'powerBHP', 'Numberofyears', 'mileageKmpl','location','kmdriven','transmission','ownertype','engineCC','seats']
 
 
 class TestDriveForm(forms.ModelForm):

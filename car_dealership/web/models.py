@@ -47,18 +47,18 @@ class Order(models.Model):
         return self.user.first_name + ' ' + self.user.last_name + ' - ' + self.car.name
 
 
-class Price(models.Model):
-    brand = models.CharField(max_length=100)
-    fueltype = models.CharField(max_length=20, null=True)
-    powerBHP = models.FloatField(null=True)
-    Numberofyears = models.IntegerField(null=True)
-    mileageKmpl = models.FloatField(null=True)
-    location = models.CharField(max_length=30, null=True)
-    kmdriven=models.IntegerField(null=True)
-    transmission=models.CharField(max_length=20, null=True)
-    ownertype=models.CharField(max_length=20, null=True)
-    engineCC=models.IntegerField(null=True)
-    seats=models.FloatField(null=True)
+# class Price(models.Model):
+#     brand = models.CharField(max_length=100)
+#     fueltype = models.CharField(max_length=20, null=True)
+#     powerBHP = models.FloatField(null=True)
+#     Numberofyears = models.IntegerField(null=True)
+#     mileageKmpl = models.FloatField(null=True)
+#     location = models.CharField(max_length=30, null=True)
+#     kmdriven=models.IntegerField(null=True)
+#     transmission=models.CharField(max_length=20, null=True)
+#     ownertype=models.CharField(max_length=20, null=True)
+#     engineCC=models.IntegerField(null=True)
+#     seats=models.FloatField(null=True)
 
-    def __str__(self):
-        return self.brand+''+self.fuel+''+self.power+''+self.carbon+''+self.year+''+self.mileage
+#     def __str__(self):
+#         return self.brand+''+self.fuel+''+self.power+''+self.carbon+''+self.year+''+self.mileage

@@ -18,9 +18,7 @@
         <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'web:price' %}">Price Predict</a>
-        </li>
+        
         {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="{% url 'web:dashboard' %}">Welcome, {{ user.last_name }}</a>

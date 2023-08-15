@@ -6,16 +6,16 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 
-from .forms import UserForm, TestDriveForm, CompareForm, PriceForm
-from .models import Car, TestDrive, Order, Price
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import GradientBoostingRegressor
-import pickle
-from sklearn.externals import joblib
-import json
-import numpy as np
-import pandas as pd
+from .forms import UserForm, TestDriveForm, CompareForm
+from .models import Car, TestDrive, Order 
+# from sklearn.model_selection import train_test_split
+# from sklearn.preprocessing import LabelEncoder
+# from sklearn.ensemble import GradientBoostingRegressor
+# import pickle
+# import joblib
+# import json
+# import numpy as np
+# import pandas as pd
 
 
 # Create your views here.
@@ -23,198 +23,198 @@ def index(request):
     return render(request, 'web/index.html')
 
 
-def price(request):
-    form = PriceForm(request.POST or None)
-    if request.method == 'POST':
-        nam = str(request.POST['brand'])
-        fuel = str(request.POST['fueltype'])
-        power = float(request.POST['powerBHP'])
-        year = int(request.POST['Numberofyears'])
-        mil = float(request.POST['mileageKmpl'])
-        locat=str(request.POST['location'])
-        km=int(request.POST['kmdriven'])
-        trans=str(request.POST['transmission'])
-        own=str(request.POST['ownertype'])
-        eng=int(request.POST['engineCC'])
-        seat= float(request.POST['seats'])
+# def price(request):
+#     form = PriceForm(request.POST or None)
+#     if request.method == 'POST':
+#         nam = str(request.POST['brand'])
+#         fuel = str(request.POST['fueltype'])
+#         power = float(request.POST['powerBHP'])
+#         year = int(request.POST['Numberofyears'])
+#         mil = float(request.POST['mileageKmpl'])
+#         locat=str(request.POST['location'])
+#         km=int(request.POST['kmdriven'])
+#         trans=str(request.POST['transmission'])
+#         own=str(request.POST['ownertype'])
+#         eng=int(request.POST['engineCC'])
+#         seat= float(request.POST['seats'])
 
-        df = pd.read_excel("C://Users/Prashant/Desktop/cars/car/car_dealership/web/data.xlsx")
+#         df = pd.read_excel("C://Users/Prashant/Desktop/cars/car/car_dealership/web/data.xlsx")
         
-        le = LabelEncoder()
-        lo=LabelEncoder()
-        na=LabelEncoder()
-        ft=LabelEncoder()
-        tr=LabelEncoder()
-        df['Name'] =na.fit_transform(df['Name'])
-        df['Location'] =lo.fit_transform(df['Location'])
-        df['Fuel_Type'] =ft.fit_transform(df['Fuel_Type'])
-        df['Transmission'] =tr.fit_transform(df['Transmission'])
-        df['Owner_Type'] =le.fit_transform(df['Owner_Type'])
-        X = df.drop(['Price'],axis = 1)
-        y = df['Price']
+#         le = LabelEncoder()
+#         lo=LabelEncoder()
+#         na=LabelEncoder()
+#         ft=LabelEncoder()
+#         tr=LabelEncoder()
+#         df['Name'] =na.fit_transform(df['Name'])
+#         df['Location'] =lo.fit_transform(df['Location'])
+#         df['Fuel_Type'] =ft.fit_transform(df['Fuel_Type'])
+#         df['Transmission'] =tr.fit_transform(df['Transmission'])
+#         df['Owner_Type'] =le.fit_transform(df['Owner_Type'])
+#         X = df.drop(['Price'],axis = 1)
+#         y = df['Price']
 
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         
-        gredR = GradientBoostingRegressor(max_depth = 2, n_estimators = 4, learning_rate = 1.0)
-        gredR.fit(X_train, y_train)
-        y_pred = gredR.predict(X_test)
+#         gredR = GradientBoostingRegressor(max_depth = 2, n_estimators = 4, learning_rate = 1.0)
+#         gredR.fit(X_train, y_train)
+#         y_pred = gredR.predict(X_test)
 
-        name= na.transform([nam])
-        location = lo.transform([locat])
-        fueltype=ft.transform([fuel])
-        transmission=tr.transform([trans])
-        ownertype=le.transform([own])
+#         name= na.transform([nam])
+#         location = lo.transform([locat])
+#         fueltype=ft.transform([fuel])
+#         transmission=tr.transform([trans])
+#         ownertype=le.transform([own])
 
-        p=gredR.predict([[name,location,km,fueltype,transmission,ownertype,mil,eng,power,seat,year]])
+#         p=gredR.predict([[name,location,km,fueltype,transmission,ownertype,mil,eng,power,seat,year]])
         
 
         
-        data1 = {
-            'brand': nam,
-            'fuel': fuel,
-            'power': power,
-            'price': p,
-            'yrs': year,
-            'mil': mil,
-            'loca':locat,
-            'km':km,
-            'trans':trans,
-            'own':own,
-            'eng':eng,
-            'seat':seat
+#         data1 = {
+#             'brand': nam,
+#             'fuel': fuel,
+#             'power': power,
+#             'price': p,
+#             'yrs': year,
+#             'mil': mil,
+#             'loca':locat,
+#             'km':km,
+#             'trans':trans,
+#             'own':own,
+#             'eng':eng,
+#             'seat':seat
 
-        }
+#         }
         
         
-        html = '''
+#         html = '''
          
-         <body style="background-color:#f2f2f2;">
-        <h1 align='center'>Car Information and its Price</h1>
-        <table class="table table-bordered">
-           <tbody>
-            <tr>
-                <td>
-                Brand Name -
-                </td>
-                 <td>
-                    {brand}
-                </td>
+#          <body style="background-color:#f2f2f2;">
+#         <h1 align='center'>Car Information and its Price</h1>
+#         <table class="table table-bordered">
+#            <tbody>
+#             <tr>
+#                 <td>
+#                 Brand Name -
+#                 </td>
+#                  <td>
+#                     {brand}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Fuel Type -
-                </td>
-                <td>
-                {fuel}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Fuel Type -
+#                 </td>
+#                 <td>
+#                 {fuel}
+#                 </td>
                 
                
-            </tr>
+#             </tr>
             
-            <tr>
-                <td>
-                Power -
-                </td>
-                <td>
-                    {power}
-                </td>
+#             <tr>
+#                 <td>
+#                 Power -
+#                 </td>
+#                 <td>
+#                     {power}
+#                 </td>
                 
-            </tr>
+#             </tr>
             
-            <tr>
-                <td>
-                No. of Years-
-                </td>
-                <td>
-                    {yrs}
-                </td>
+#             <tr>
+#                 <td>
+#                 No. of Years-
+#                 </td>
+#                 <td>
+#                     {yrs}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Mileage -
-                </td>
-                <td>
-                    {mil}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Mileage -
+#                 </td>
+#                 <td>
+#                     {mil}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Location -
-                </td>
-                <td>
-                    {loca}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Location -
+#                 </td>
+#                 <td>
+#                     {loca}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                KM Driven -
-                </td>
-                <td>
-                    {km}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 KM Driven -
+#                 </td>
+#                 <td>
+#                     {km}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Engine -
-                </td>
-                <td>
-                    {eng}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Engine -
+#                 </td>
+#                 <td>
+#                     {eng}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Transmission -
-                </td>
-                <td>
-                    {trans}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Transmission -
+#                 </td>
+#                 <td>
+#                     {trans}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                No. of Seats -
-                </td>
-                <td>
-                    {seat}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 No. of Seats -
+#                 </td>
+#                 <td>
+#                     {seat}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Ownertype -
-                </td>
-                <td>
-                    {own}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Ownertype -
+#                 </td>
+#                 <td>
+#                     {own}
+#                 </td>
                 
-            </tr>
-            <tr>
-                <td>
-                Price for this Car is(in Lakhs)- Rs
-                </td>
-                <td>
-                    {price}
-                </td>
+#             </tr>
+#             <tr>
+#                 <td>
+#                 Price for this Car is(in Lakhs)- Rs
+#                 </td>
+#                 <td>
+#                     {price}
+#                 </td>
                
-            </tr>
-            </tbody>
-        </table>
-        '''.format(**data1)
+#             </tr>
+#             </tbody>
+#         </table>
+#         '''.format(**data1)
 
-        return HttpResponse(html)
+#         return HttpResponse(html)
 
-    context = {
-        'form': form
-    }
+#     context = {
+#         'form': form
+#     }
 
-    return render(request, 'web/price.html', context)
+#     return render(request, 'web/price.html', context)
 
 
 def login_user(request):
