@@ -1,5 +1,5 @@
 # Car Buy and Sell
-###### Car BUsing Python, Django etc.
+###### Car Buy and sell Using Python Django Web Framework
 
 ###Link to website
 https://prashant29.pythonanywhere.com/
